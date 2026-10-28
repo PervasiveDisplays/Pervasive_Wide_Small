@@ -328,8 +328,8 @@ void Pervasive_Wide_Small::COG_initial(uint8_t updateMode)
 
 void Pervasive_Wide_Small::COG_sendImageDataNormal(FRAMEBUFFER_CONST_TYPE firstFrame, uint32_t sizeFrame) // First frame, blackBuffer
 {
-    // firstFrame: New Image for NORMAL, Old Image for FAST
-    // secondFrame: 0x00 data for NORMAL, New Image for FAST
+    // firstFrame: New Image for NORMAL
+    // secondFrame: 0x00 data for NORMAL
 
     // Application note § 4. Input image to the EPD
     // b_sendIndexData(0x10, s_newImage, sizeFrame); // First frame, blackBuffer
@@ -356,8 +356,8 @@ void Pervasive_Wide_Small::COG_sendImageDataNormal(FRAMEBUFFER_CONST_TYPE firstF
 
 void Pervasive_Wide_Small::COG_sendImageDataFast(FRAMEBUFFER_CONST_TYPE firstFrame, FRAMEBUFFER_CONST_TYPE secondFrame, uint32_t sizeFrame) // First frame, blackBuffer
 {
-    // firstFrame: New Image for NORMAL, Old Image for FAST
-    // secondFrame: 0x00 data for NORMAL, New Image for FAST
+    // firstFrame: New Image for FAST
+    // secondFrame: Old Image for FAST
 
     // Application note § 4. Input image to the EPD
     // b_sendIndexData(0x10, s_newImage, sizeFrame); // First frame, blackBuffer
@@ -370,8 +370,8 @@ void Pervasive_Wide_Small::COG_sendImageDataFast(FRAMEBUFFER_CONST_TYPE firstFra
         case eScreen_EPD_152_KS_0J:
         case eScreen_EPD_290_KS_06:
 
-            b_sendIndexData(0x24, secondFrame, sizeFrame); // Next frame, blackBuffer
-            b_sendIndexData(0x26, firstFrame, sizeFrame); // Previous frame, 0x00
+            b_sendIndexData(0x24, secondFrame, sizeFrame); // Previous frame
+            b_sendIndexData(0x26, firstFrame, sizeFrame); // Next frame
             break;
 
         default:
@@ -381,8 +381,8 @@ void Pervasive_Wide_Small::COG_sendImageDataFast(FRAMEBUFFER_CONST_TYPE firstFra
                 b_sendCommandData8(0x50, 0x27); // Vcom and data interval setting
             }
 
-            b_sendIndexData(0x10, secondFrame, sizeFrame); // First frame, blackBuffer
-            b_sendIndexData(0x13, firstFrame, sizeFrame); // Second frame, 0x00
+            b_sendIndexData(0x10, secondFrame, sizeFrame); // Previous frame
+            b_sendIndexData(0x13, firstFrame, sizeFrame); // Next frame
 
             // Additional settings for fast update, 154 213 266 370 and 437 screens (s_flag50)
             if (s_flag50)
